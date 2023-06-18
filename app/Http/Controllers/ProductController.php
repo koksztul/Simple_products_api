@@ -25,25 +25,42 @@ class ProductController extends Controller
         $sortBy = $request->input('sort_by');
         $filterName = $request->input('filter_name');
         $filterDescription = $request->input('filter_description');
-    
-        return $this->productService->list($sortBy, $filterName, $filterDescription);
+
+        return ProductResource::collection($this->productService->list($sortBy, $filterName, $filterDescription));
     }
 
+    /**
+     * @param Product $product
+     * @return ProductResource
+     */
     public function show(Product $product): ProductResource
     {
-        return $this->productService->get($product);
+        return new ProductResource($this->productService->get($product));
     }
 
+    /**
+     * @param StoreProductRequest $request
+     * @return ProductResource
+     */
     public function store(StoreProductRequest $request): ProductResource
     {
-        return $this->productService->create($request->all());
+        return new ProductResource($this->productService->store($request->all()));
     }
 
+    /**
+     * @param UpdateProductRequest $request
+     * @param Product $product
+     * @return ProductResource
+     */
     public function update(UpdateProductRequest $request, Product $product): ProductResource
     {
-        return $this->productService->update($request->all(), $product);
+        return new ProductResource($this->productService->update($request->all(), $product));
     }
 
+    /**
+     * @param Product $product
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy(Product $product): \Illuminate\Http\JsonResponse
     {
         $this->productRepository->delete($product);

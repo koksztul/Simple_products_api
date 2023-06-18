@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Repositories\PriceRepository;
 use App\Repositories\ProductRepository;
@@ -19,9 +18,9 @@ class ProductService
      * @param string|null $sortBy
      * @param string|null $filterName
      * @param string|null $filterDescription
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function list($sortBy = null, $filterName = null, $filterDescription = null): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function list($sortBy = null, $filterName = null, $filterDescription = null): \Illuminate\Database\Eloquent\Collection
     {
         $query = $this->productRepository->list();
     
@@ -38,15 +37,15 @@ class ProductService
         if ($filterDescription) {
             $query->where('description', 'like', '%' . $filterDescription . '%');
         }
-    
-        return ProductResource::collection($query->get());
+
+        return $query->get();
     }
 
     /**
      * @param array $data
-     * @return ProductResource
+     * @return Product
      */
-    public function create(array $data): ProductResource
+    public function store(array $data): Product
     {
         try {
             DB::beginTransaction();
@@ -69,24 +68,24 @@ class ProductService
             throw $e;
         }
 
-        return new ProductResource($product);   
+        return $product;
     }
 
     /**
      * @param Product $product
-     * @return ProductResource
+     * @return Product
      */
-    public function get(Product $product): ProductResource
+    public function get(Product $product): Product
     {
-        return new ProductResource($this->productRepository->get($product));
+        return $this->productRepository->get($product);
     }
 
     /**
      * @param array $data
      * @param Product $product
-     * @return ProductResource
+     * @return Product
      */
-    public function update(array $data, Product $product): ProductResource
+    public function update(array $data, Product $product): Product
     {
         try {
             DB::beginTransaction();
@@ -112,6 +111,6 @@ class ProductService
             throw $e;
         }
 
-        return new ProductResource($product->fresh('prices'));   
+        return $product->fresh('prices');   
     }
 }
