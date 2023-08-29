@@ -1,11 +1,11 @@
 ## opis
-Projekt został przygotowany na podstawie frameworka Laravel, najnowszej wersji, oraz wykorzystuje silnik bazy danych MySQL. Struktura bazodanowa została stworzona, umożliwiając przechowywanie produktów wraz z cenami (jeden produkt może być dostępny w wielu cenach), a każdy produkt posiada swój opis. Dodatkowo, endpointy zostały przygotowane, umożliwiając wylistowanie, sortowanie, filtrowanie produktów oraz prezentację informacji szczegółowych o wybranym produkcie. Użytkownicy zalogowani mają możliwość zarządzania produktami poprzez dodawanie, edycję i usuwanie produktów.
+The project has been developed based on the Laravel framework, utilizing the latest version, and employing the MySQL database engine. The database structure has been designed to facilitate the storage of products along with their prices (each product can have multiple prices), and each product comes with its own description. Furthermore, endpoints have been set up to allow listing, sorting, and filtering of products, as well as presenting detailed information about a selected product. Authenticated users have the capability to manage products through adding, editing, and deleting them.
 
-## Technologie
+## Techonologies
 - PHP 8.1.18
 - Laravel 10.13.5
 
-## instalacja
+## Installation
 
 1. docker-compose up -d
 2. docker exec -ti MyLead-app bash
